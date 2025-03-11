@@ -45,7 +45,7 @@ export default function SelectChain() {
   const { addShownAptosNetworks, removeShownAptosNetworks } = useCurrentShownAptosNetworks();
   const { addShownSuiNetworks, removeShownSuiNetworks } = useCurrentShownSuiNetworks();
   // 修改
-  const { addShownSolanaNetworks,removeShownSolanaNetworks} = useCurrentShownSolanaNetworks()
+  const { addShownSolanaNetworks, removeShownSolanaNetworks } = useCurrentShownSolanaNetworks()
 
   const { extensionStorage } = useExtensionStorage();
 
@@ -75,7 +75,7 @@ export default function SelectChain() {
         await addShownSuiNetworks(SUI_NETWORKS);
       }
       // 修改
-      if(chain.id === SOLANA.id){
+      if (chain.id === SOLANA.id) {
         await addShownSolanaNetworks(SOLANA_NETWORKS);
       }
     } else if (allowedChainIds.length < 2) {
@@ -95,7 +95,7 @@ export default function SelectChain() {
         await removeShownSuiNetworks(SUI_NETWORKS);
       }
 
-      if(chain.id === SOLANA.id){
+      if (chain.id === SOLANA.id) {
         await removeShownSolanaNetworks(SOLANA_NETWORKS);
       }
     }
@@ -110,12 +110,27 @@ export default function SelectChain() {
           </InputAdornment>
         }
         placeholder={t('pages.Account.Initialize.components.SelectChain.index.placeholder')}
+        // placeholder='11111'
         value={search}
         onChange={(event) => setSearch(event.currentTarget.value)}
       />
       <ChainContainer>
         <ListContainer>
-        {filteredOpenChains.map((chain) => (
+          {filteredOpenChains.map((chain) => (
+            <Item
+              key={chain.id}
+              imageProps={{ alt: chain.chainName, src: chain.imageURL }}
+              switchProps={{
+                checked: allowedChainIds.includes(chain.id),
+                onChange: (_, checked) => {
+                  void handleOnChange(checked, chain);
+                },
+              }}
+            >
+              {chain.chainName}
+            </Item>
+          ))}
+          {filteredEthereumChains.map((chain) => (
             <Item
               key={chain.id}
               imageProps={{ alt: chain.chainName, src: chain.imageURL }}

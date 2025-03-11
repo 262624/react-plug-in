@@ -333,7 +333,7 @@
                             "next": "下一步"
                         }
                     },
-                    "SelectChain": {
+                    "placeholder": {
                         "index": {
                             "placeholder": "搜索链",
                             "removeAllowedChainError": "请选择至少一条链"

@@ -27,6 +27,8 @@ export function getAddress(chain: Chain, publicKey?: Buffer) {
   if (!publicKey) {
     return '';
   }
+  console.log(chain, 'chain');
+  
   if (chain.line === 'COSMOS') {
     if (chain.type === 'ETHERMINT') {
       return getAddressForEthermint(publicKey, chain.bech32Prefix.address);
@@ -154,6 +156,9 @@ export function convertToLocales(str: string): string {
   if (str === LANGUAGE_TYPE.EN) return 'en-US';
 
   if (str === LANGUAGE_TYPE.KO) return 'ko-KR';
+
+  // 修改
+  if (str === LANGUAGE_TYPE.ZH) return 'zh-CN';
 
   return '';
 }

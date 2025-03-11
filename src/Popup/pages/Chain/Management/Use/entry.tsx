@@ -3,7 +3,7 @@ import { useSnackbar } from 'notistack';
 import { useDebounce } from 'use-debounce';
 import { InputAdornment, Typography } from '@mui/material';
 
-import { APTOS_NETWORKS, BITCOIN_CHAINS, COSMOS_CHAINS, ETHEREUM_NETWORKS, SUI_NETWORKS,SOLANA_NETWORKS } from '~/constants/chain';
+import { APTOS_NETWORKS, BITCOIN_CHAINS, COSMOS_CHAINS, ETHEREUM_NETWORKS, SUI_NETWORKS, SOLANA_NETWORKS } from '~/constants/chain';
 import { APTOS } from '~/constants/chain/aptos/aptos';
 import { BITCOIN } from '~/constants/chain/bitcoin/bitcoin';
 import { COSMOS } from '~/constants/chain/cosmos/cosmos';
@@ -36,6 +36,7 @@ import {
 
 import NoResults16Icon from '~/images/icons/NoResults16.svg';
 import { SOLANA } from '~/constants/chain/solana/solana';
+import { useCurrentShownSolanaNetworks } from '~/Popup/hooks/useCurrent/useCurrentShowmSolana';
 
 export default function Entry() {
   const [search, setSearch] = useState('');
@@ -48,13 +49,18 @@ export default function Entry() {
   const { addShownAptosNetwork, removeShownAptosNetwork } = useCurrentShownAptosNetworks();
   const { addShownSuiNetwork, removeShownSuiNetwork } = useCurrentShownSuiNetworks();
 
+  // 修改
+  const {addShownSolanaNetwork,removeShownSolanaNetwork} = useCurrentShownSolanaNetworks();
+
   const [isExpandedEthereum, setIsExpandedEthereum] = useState<boolean>(false);
   const [isExpandedCosmos, setIsExpandedCosmos] = useState<boolean>(false);
   const [isExpandedAptos, setIsExpandedAptos] = useState<boolean>(false);
   const [isExpandedSui, setIsExpandedSui] = useState<boolean>(false);
   const [isExpandedBitcoin, setIsExpandedBitcoin] = useState<boolean>(false);
-
-  const handleChange = (panel: 'ethereum' | 'cosmos' | 'aptos' | 'sui' | 'bitcoin') => (_: React.SyntheticEvent, newExpanded: boolean) => {
+  // 修改
+  const [isExpandedSolana, setIsExpandedSolana] = useState<boolean>(false);
+// 修改
+  const handleChange = (panel: 'ethereum' | 'cosmos' | 'aptos' | 'sui' | 'bitcoin' | 'solana') => (_: React.SyntheticEvent, newExpanded: boolean) => {
     if (panel === 'ethereum') {
       setIsExpandedEthereum(newExpanded);
     } else if (panel === 'cosmos') {
@@ -65,6 +71,8 @@ export default function Entry() {
       setIsExpandedSui(newExpanded);
     } else if (panel === 'bitcoin') {
       setIsExpandedBitcoin(newExpanded);
+    } else if (panel === 'solana') {
+      setIsExpandedSolana(newExpanded);
     }
   };
 
@@ -72,7 +80,7 @@ export default function Entry() {
 
   const { t } = useTranslation();
 
-  const { allowedChainIds, shownEthereumNetworkIds, shownAptosNetworkIds, shownSuiNetworkIds } = extensionStorage;
+  const { allowedChainIds, shownEthereumNetworkIds, shownAptosNetworkIds, shownSuiNetworkIds,showSolanaNetworks } = extensionStorage;
 
   const filteredEthereumNetworks = useMemo(() => {
     if (debouncedOpenSearch) {
@@ -122,12 +130,12 @@ export default function Entry() {
 
   // 修改
   const filteredSolanaChains = useMemo(() => {
-  if (debouncedOpenSearch) {
-    return SOLANA.chainName.toLowerCase().indexOf(debouncedOpenSearch.toLowerCase()) > -1 ? SOLANA_NETWORKS : [];
-  }
+    if (debouncedOpenSearch) {
+      return SOLANA.chainName.toLowerCase().indexOf(debouncedOpenSearch.toLowerCase()) > -1 ? SOLANA_NETWORKS : [];
+    }
 
-  return debouncedCloseSearch ? (SOLANA.chainName.toLowerCase().indexOf(debouncedCloseSearch.toLowerCase()) > -1 ? SOLANA_NETWORKS : []) : SOLANA_NETWORKS;
-}, [debouncedCloseSearch, debouncedOpenSearch]);
+    return debouncedCloseSearch ? (SOLANA.chainName.toLowerCase().indexOf(debouncedCloseSearch.toLowerCase()) > -1 ? SOLANA_NETWORKS : []) : SOLANA_NETWORKS;
+  }, [debouncedCloseSearch, debouncedOpenSearch]);
 
   const handleOnChangeChain = async (checked: boolean, chain: Chain) => {
     if (checked) {
@@ -203,6 +211,25 @@ export default function Entry() {
     }
   };
 
+  // 修改
+  const handleOnChangeSolanaNetwork = async (checked: boolean, network: EthereumNetwork) => {
+    if (checked) {
+      if (shownEthereumNetworkIds.length === 0) {
+        await addAllowedChainId(SOLANA);
+      }
+      await addShownSolanaNetwork(network);
+    } else if (shownEthereumNetworkIds.length === 1) {
+      if (allowedChainIds.length < 2) {
+        enqueueSnackbar(t('pages.Chain.Management.Use.entry.removeAllowedChainError'), { variant: 'error' });
+      } else {
+        await removeShownSolanaNetwork(network);
+        await removeAllowedChainId(SOLANA);
+      }
+    } else {
+      await removeShownSolanaNetwork(network);
+    }
+  };
+
   return (
     <Container>
       <StyledInput
@@ -216,6 +243,49 @@ export default function Entry() {
         onChange={(event) => setSearch(event.currentTarget.value)}
       />
       <ChainAccordionContainer>
+
+        <StyledChainAccordion expanded={!!debouncedOpenSearch || isExpandedSolana} onChange={handleChange('solana')}>
+          <StyledChainAccordionSummary
+            data-is-expanded={!!debouncedOpenSearch || isExpandedSolana}
+            data-is-exists={!!filteredSolanaChains.length}
+            aria-controls="ethereum-content"
+            id="ethereum-header"
+          >
+            <ItemLeftContainer>
+              <ItemLeftImageContainer>
+                <Image src={SOLANA.imageURL} />
+              </ItemLeftImageContainer>
+              <ItemLeftTextContainer>
+                <Typography variant="h5">OPEN</Typography>
+              </ItemLeftTextContainer>
+            </ItemLeftContainer>
+          </StyledChainAccordionSummary>
+          
+          <StyledChainAccordionDetails data-is-exists={!!filteredSolanaChains.length}>
+            {filteredSolanaChains.length ? (
+              filteredSolanaChains.map((network) => (
+                <SubItem
+                  key={network.id}
+                  imageProps={{ alt: network.networkName, src: network.imageURL }}
+                  switchProps={{
+                    checked: showSolanaNetworks.includes(network.id),
+                    onChange: (_, checked) => {
+                      void handleOnChangeSolanaNetwork(checked, network);
+                    },
+                  }}
+                >
+                  {network.networkName}
+                </SubItem>
+              ))
+            ) : (
+              <NoResultsContainer>
+                <NoResults16Icon />
+                <Typography variant="h6">No Results</Typography>
+              </NoResultsContainer>
+            )}
+          </StyledChainAccordionDetails>
+        </StyledChainAccordion>
+
         <StyledChainAccordion expanded={!!debouncedOpenSearch || isExpandedEthereum} onChange={handleChange('ethereum')}>
           <StyledChainAccordionSummary
             data-is-expanded={!!debouncedOpenSearch || isExpandedEthereum}
