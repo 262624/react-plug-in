@@ -31,7 +31,7 @@ export default function Entry() {
   if (currentChain.line === 'BITCOIN') {
     return <Bitcoin chain={currentChain} />;
   }
-
+// 修改
   if (currentChain.line === 'SOLANA') {
     return <Solana chain={currentChain} />;
   }

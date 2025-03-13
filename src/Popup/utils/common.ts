@@ -22,12 +22,14 @@ import { getAddress as getEthereumAddress } from '~/Popup/utils/ethereum';
 import { getAddress as getSuiAddress } from '~/Popup/utils/sui';
 import type { Chain } from '~/types/chain';
 import type { Account } from '~/types/extensionStorage';
+import { getSolana, mnemonSolana } from './solana';
 
 export function getAddress(chain: Chain, publicKey?: Buffer) {
   if (!publicKey) {
     return '';
   }
-  console.log(chain, 'chain');
+  // console.log(chain, 'chain');
+  // console.log(publicKey,'publicKey');
   
   if (chain.line === 'COSMOS') {
     if (chain.type === 'ETHERMINT') {
@@ -53,13 +55,21 @@ export function getAddress(chain: Chain, publicKey?: Buffer) {
 
     return getBitcoinAddress(publicKey, addressType, chain.network);
   }
+// 修改
+  if(chain.line === 'SOLANA') {
+    getSolana(publicKey);
+    return getSolana(publicKey);
+    // console.log(publicKey.toBase58());
+    
+  }
 
   return '';
 }
 
 export function getKeyPair(account: Account, chain: Chain, password: string | null) {
   if (password === null) return null;
-
+  // console.log(account, 'account');
+  
   if (account.type === 'MNEMONIC') {
     const mnemonic = aesDecrypt(account.encryptedMnemonic, password);
 
@@ -73,8 +83,16 @@ export function getKeyPair(account: Account, chain: Chain, password: string | nu
       return mnemonicToSuiPair(mnemonic, path);
     }
 
+
+    if(chain.line === 'SOLANA') {
+      const path = "m/44'/501'/0'/0'";
+ 
+      return mnemonSolana(mnemonic, path);
+    }
+
     const path = `m/${chain.bip44.purpose}/${chain.bip44.coinType}/${chain.bip44.account}/${chain.bip44.change}/${account.bip44.addressIndex}`;
     return mnemonicToPair(mnemonic, path);
+
   }
 
   if (account.type === 'PRIVATE_KEY') {

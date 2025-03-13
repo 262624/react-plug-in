@@ -61,7 +61,8 @@ export function useCurrentSolanaNetworks() {
 
     await setExtensionStorage('additionalSolanaNetworks', newAdditionalSolanaNetworks);
   };
-
+  // console.log(additionalSolanaNetworks, 'additionalSolanaNetworks');
+  // console.log(currentSolanaNetwork, 'currentSolanaNetwork');
   return {
     solanaNetworks: allNetworks,
     additionalSolanaNetworks,

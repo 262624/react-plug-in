@@ -50,7 +50,7 @@ export function useAccounts(suspense?: boolean) {
           });
           return { id: account.id, address: addresses, type: account.type };
         });
-        console.log(accountAddress, 'accountAddress');
+        // console.log(accountAddress, 'accountAddress');
         
         if (Object.keys(accountAddress).join('') !== (address && Object.keys(address).join(''))) {
           void setExtensionStorage('address', accountAddress);

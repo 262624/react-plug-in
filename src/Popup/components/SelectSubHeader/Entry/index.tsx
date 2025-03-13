@@ -5,6 +5,7 @@ import Bitcoin from './Bitcoin';
 import Cosmos from './Cosmos';
 import Ethereum from './Ethereum';
 import Sui from './Sui';
+import Solana from './Solana';
 
 type EntryProps = {
   isShowChain: boolean;
@@ -31,6 +32,11 @@ export default function Entry({ isShowChain }: EntryProps) {
 
   if (currentChain.line === 'BITCOIN') {
     return <Bitcoin chain={currentChain} isShowChain={isShowChain} />;
+  }
+
+  // 修改
+  if(currentChain.line === 'SOLANA') {
+    return <Solana chain={currentChain} isShowChain={isShowChain} />;
   }
 
   return null;

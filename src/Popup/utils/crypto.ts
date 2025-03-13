@@ -147,7 +147,7 @@ export function mnemonicToSuiPair(mnemonic: string, path: string) {
 
   const privateKey = Buffer.from(node.key);
   const publicKey = Buffer.from(account.pubKey().toUint8Array());
-
+  
   return { privateKey, publicKey };
 }
 

@@ -57,7 +57,7 @@ export default function ChainPopover({ onClose, currentChain, onClickChain, isOn
 
   // 修改
 
-  const {showSolanaNetwork} = useCurrentSolanaNetworks();
+  const { showSolanaNetwork,currentSolanaNetwork,setCurrentSolanaNetwork } = useCurrentSolanaNetworks();
 
   const { t } = useTranslation();
 
@@ -116,11 +116,11 @@ export default function ChainPopover({ onClose, currentChain, onClickChain, isOn
                     ...showSolanaNetwork.map((network) => (
                       <ChainItemButton
                         key={`${chain.id}-${network.id}`}
-                        isActive={currentChain.id === chain.id && currentEthereumNetwork.id === network.id}
-                        isBackgroundActive={currentEthereumNetwork.id === network.id}
+                        isActive={currentChain.id === chain.id && currentSolanaNetwork.id === network.id}
+                        isBackgroundActive={currentSolanaNetwork.id === network.id}
                         imgSrc={network.imageURL}
                         onClick={async () => {
-                          await setCurrentEthereumNetwork(network);
+                          await setCurrentSolanaNetwork(network);
                           onClickChain?.(chain);
                           onClose?.({}, 'backdropClick');
                         }}
