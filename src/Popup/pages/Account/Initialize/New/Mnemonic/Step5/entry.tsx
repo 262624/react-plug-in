@@ -38,9 +38,9 @@ export default function Entry() {
               id: accountId,
               type: 'MNEMONIC',
               bip44: { addressIndex: `${newAccount.addressIndex}` },
-              encryptedMnemonic: aesEncrypt(newAccount.mnemonic, data.password),//加密后的助记词
-              encryptedPassword: aesEncrypt(data.password, newAccount.mnemonic),//加密密码
-              encryptedRestoreString: sha512(newAccount.mnemonic),//助记词的sha512
+              encryptedMnemonic: aesEncrypt(newAccount.mnemonic, data.password),
+              encryptedPassword: aesEncrypt(data.password, newAccount.mnemonic),
+              encryptedRestoreString: sha512(newAccount.mnemonic),
             },
           ]);
 

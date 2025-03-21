@@ -5,12 +5,13 @@ import type { SolanaNetwork } from '~/types/chain';
 export const MAINNET: SolanaNetwork = {
   id: '174f6671-ef2d-4c30-a140-63f493c5a318',
   networkName: 'Mainnet',
-  rpcURL: 'https://api.mainnet-beta.solana.com',
   displayDenom: 'SOL',
   tokenImageURL: solanaTokenImg,
   imageURL: solanaChainImg,
-  explorerURL: 'https://explorer.solana.com',
+  explorerURL: 'https://openverse.live',
   coinGeckoId: 'solana',
   decimals: 9,
-  chainId: '102x'
+  chainId: '102x',
+  rpcURL: 'https://api.mainnet.openverse.network/', 
+
 };

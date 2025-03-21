@@ -30,7 +30,7 @@ export function getAddress(chain: Chain, publicKey?: Buffer) {
   }
   // console.log(chain, 'chain');
   // console.log(publicKey,'publicKey');
-  
+
   if (chain.line === 'COSMOS') {
     if (chain.type === 'ETHERMINT') {
       return getAddressForEthermint(publicKey, chain.bech32Prefix.address);
@@ -55,12 +55,12 @@ export function getAddress(chain: Chain, publicKey?: Buffer) {
 
     return getBitcoinAddress(publicKey, addressType, chain.network);
   }
-// 修改
-  if(chain.line === 'SOLANA') {
+  // 修改
+  if (chain.line === 'SOLANA') {
     getSolana(publicKey);
     return getSolana(publicKey);
     // console.log(publicKey.toBase58());
-    
+
   }
 
   return '';
@@ -69,7 +69,8 @@ export function getAddress(chain: Chain, publicKey?: Buffer) {
 export function getKeyPair(account: Account, chain: Chain, password: string | null) {
   if (password === null) return null;
   // console.log(account, 'account');
-  
+  console.log(password, 'password');
+
   if (account.type === 'MNEMONIC') {
     const mnemonic = aesDecrypt(account.encryptedMnemonic, password);
 
@@ -84,9 +85,9 @@ export function getKeyPair(account: Account, chain: Chain, password: string | nu
     }
 
 
-    if(chain.line === 'SOLANA') {
+    if (chain.line === 'SOLANA') {
       const path = "m/44'/501'/0'/0'";
- 
+
       return mnemonSolana(mnemonic, path);
     }
 

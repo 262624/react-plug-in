@@ -166,12 +166,27 @@ export type OpenverseNetwork = {
   explorerURL?: string;
   coinGeckoId?: string;
   decimals: number;
+  chainId: string;
 };
 
 export type EthereumERC20Token = {
   id: string;
   ethereumNetworkId: string;
   tokenType: typeof ETHEREUM_TOKEN_TYPE.ERC20;
+  address: string;
+  name?: string;
+  displayDenom: string;
+  decimals: number;
+  imageURL?: string;
+  coinGeckoId?: string;
+  default?: boolean;
+};
+
+// 修改
+export type SolanaERC20Token = {
+  id: string;
+  solanaNetworkId?: string | undefined;
+  tokenType: typeof SOLANA_TOKEN_TYPE.SPL;
   address: string;
   name?: string;
   displayDenom: string;
@@ -225,7 +240,7 @@ export type SolanaNetwork = {
 // Solana Token 类型
 export type SolanaToken = {
   id: string;
-  solanaNetworkId: string;
+  solanaNetworkId?: string;
   tokenType: typeof SOLANA_TOKEN_TYPE.SPL; // 假设 SOLANA_TOKEN_TYPE 中有 SPL 常量
   address: string;
   name?: string;
@@ -241,3 +256,4 @@ export type SolanaToken = {
 export type Chain = CosmosChain | EthereumChain | AptosChain | SuiChain | BitcoinChain | OpenverseChain | SolanaChain;
 
 export type EthereumToken = EthereumERC20Token;
+export type SolANAToken = SolanaERC20Token;

@@ -5,7 +5,7 @@ import type { SolanaChain } from '~/types/chain';
 export const SOLANA: SolanaChain = {
   line: 'SOLANA',
   chainName: 'Solana Networks',
-  rpcURL: 'https://api.mainnet-beta.solana.com', 
+  rpcURL: 'https://api.mainnet.openverse.network/', 
   displayDenom: 'SOL',
   explorerURL: 'https://explorer.solana.com',
   coinGeckoId: 'solana',
@@ -20,3 +20,5 @@ export const SOLANA: SolanaChain = {
   tokenImageURL: solanaTokenImg,
   imageURL: solanaChainImg
 };
+
+export const EVM_NATIVE_TOKEN_ADDRESS = 'Stake11111111111111111111111111111111111111';

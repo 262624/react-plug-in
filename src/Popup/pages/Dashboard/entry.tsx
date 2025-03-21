@@ -53,6 +53,7 @@ import {
   TotalValueTextContainer,
 } from './styled';
 import { useCurrentSolanaNetworks } from '~/Popup/hooks/useCurrent/useCurrentSolanaNetworks';
+import SolanaChainItem, { SolanaChainItemError, SolanaChainItemLedgerCheck, SolanaChainItemSkeleton } from './components/ChainItem/components/SolanaChainItem';
 
 type ChainItem<T = Chain> = {
   chain: T;
@@ -132,18 +133,18 @@ export default function Entry() {
           {/* 修改 */}
           {solanaChainList.map((item) =>
             solanaNetworkList.map((network) => (
-              <SuiChainItemLedgerCheck chain={item.chain} key={`${currentAccount.id}${item.chain.id}${network.id}`} network={network}>
+              <SolanaChainItemLedgerCheck chain={item.chain} key={`${currentAccount.id}${item.chain.id}${network.id}`} network={network}>
                 <ErrorBoundary
                   FallbackComponent={
                     // eslint-disable-next-line react/no-unstable-nested-components
-                    (props) => <SuiChainItemError {...props} chain={item.chain} network={network} />
+                    (props) => <SolanaChainItemError {...props} chain={item.chain} network={network} />
                   }
                 >
-                  <Suspense fallback={<SuiChainItemSkeleton chain={item.chain} network={network} />}>
-                    <SuiChainItem key={item.chain.id} chain={item.chain} network={network} />
+                  <Suspense fallback={<SolanaChainItemSkeleton chain={item.chain} network={network} />}>
+                    <SolanaChainItem key={item.chain.id} chain={item.chain} network={network} />
                   </Suspense>
                 </ErrorBoundary>
-              </SuiChainItemLedgerCheck>
+              </SolanaChainItemLedgerCheck>
             )),
           )}
           {ethereumChainList.map((item) =>
@@ -256,6 +257,6 @@ function isSui(item: ChainItem): item is ChainItem<SuiChain> {
   return item.chain.line === 'SUI';
 }
 // 修改
-function isSOLANA(item: ChainItem): item is ChainItem<SuiChain> {
+function isSOLANA(item: ChainItem): item is ChainItem<SolanaChain> {
   return item.chain.line === 'SOLANA';
 }

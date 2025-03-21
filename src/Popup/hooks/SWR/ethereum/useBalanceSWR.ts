@@ -26,6 +26,7 @@ export function useBalanceSWR(network?: EthereumNetwork, config?: SWRConfigurati
 
   const { rpcURL } = network || currentEthereumNetwork;
 
+  
   const address = accounts.data?.find((account) => account.id === extensionStorage.selectedAccountId)?.address[chain.id] || '';
 
   const fetcher = (params: FetchParams) => post<BalancePayload>(params.url, { ...params.body, id: 1, jsonrpc: '2.0' });

@@ -1,6 +1,6 @@
 import type { ACCOUNT_TYPE, CURRENCY_TYPE, LANGUAGE_TYPE } from '~/constants/extensionStorage';
 import type { PERMISSION } from '~/constants/sui';
-import type { AptosNetwork, BIP44, BitcoinChain, Chain, CommonChain, CosmosToken, EthereumNetwork, EthereumToken, SuiNetwork,SolanaChain, SolanaNetwork } from '~/types/chain';
+import type { AptosNetwork, BIP44, BitcoinChain, Chain, CommonChain, CosmosToken, EthereumNetwork, EthereumToken, SuiNetwork,SolanaChain, SolanaNetwork, SolanaToken } from '~/types/chain';
 import type { TransportType } from '~/types/ledger';
 import type { Path } from '~/types/route';
 import type { ThemeType } from '~/types/theme';
@@ -136,6 +136,7 @@ export type ExtensionStorage = {
   selectedSolanaNetworkId: SolanaChain['id'];
   showSolanaNetworks: SolanaNetwork['id'][];
   additionalSolanaNetworks: SolanaNetwork[];
+  solansTokens: SolanaToken[];
 
   cosmosTokens: CosmosToken[];
   ethereumTokens: EthereumToken[];

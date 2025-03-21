@@ -13,7 +13,7 @@ import Number from '~/Popup/components/common/Number';
 import Skeleton from '~/Popup/components/common/Skeleton';
 import Tooltip from '~/Popup/components/common/Tooltip';
 import { useAccounts } from '~/Popup/hooks/SWR/cache/useAccounts';
-import { useBalanceSWR } from '~/Popup/hooks/SWR/ethereum/useBalanceSWR';
+// import { useBalanceSWR } from '~/Popup/hooks/SWR/ethereum/useBalanceSWR';
 import { useBlockExplorerURLSWR } from '~/Popup/hooks/SWR/ethereum/useBlockExplorerURLSWR';
 import { useCoinGeckoPriceSWR } from '~/Popup/hooks/SWR/useCoinGeckoPriceSWR';
 import { useCurrentAccount } from '~/Popup/hooks/useCurrent/useCurrentAccount';
@@ -57,6 +57,7 @@ import ReceiveIcon from '~/images/icons/Receive.svg';
 import RetryIcon from '~/images/icons/Retry.svg';
 import SendIcon from '~/images/icons/Send.svg';
 import SwapIcon16 from '~/images/icons/Swap16.svg';
+import { useBalanceSWR } from '~/Popup/hooks/SWR/solana/useSolanaSWR';
 
 type NativeChainCardProps = {
   chain: SolanaChain;
@@ -72,6 +73,7 @@ export default function NativeChainCard({ chain, isCustom }: NativeChainCardProp
   const accounts = useAccounts(true);
   const balance = useBalanceSWR(undefined, { suspense: true });
 
+
   const { t } = useTranslation();
 
   const { navigate } = useNavigate();
@@ -80,7 +82,8 @@ export default function NativeChainCard({ chain, isCustom }: NativeChainCardProp
 
   const { data } = useCoinGeckoPriceSWR();
 
-  const amount = useMemo(() => BigInt(balance?.data?.result || '0').toString(), [balance?.data?.result]);
+
+  const amount = useMemo(() => BigInt(balance?.data?.result.value[0].lamports || '0').toString(), [balance?.data?.result.value[0].lamports]);
 
   const price = useMemo(() => (coinGeckoId && data?.[coinGeckoId]?.[extensionStorage.currency]) || 0, [coinGeckoId, data, extensionStorage.currency]);
 
@@ -170,7 +173,7 @@ export default function NativeChainCard({ chain, isCustom }: NativeChainCardProp
         <Button Icon={SendIcon} typoVarient="h5" onClick={() => navigate('/wallet/send')}>
           {t('pages.Wallet.components.ethereum.NativeChainCard.index.sendButton')}
         </Button>
-        <FourthLineCenterContainer />
+        {/* <FourthLineCenterContainer />
         <Button
           Icon={SwapIcon16}
           accentColor={ACCENT_COLORS.GREEN01}
@@ -179,7 +182,7 @@ export default function NativeChainCard({ chain, isCustom }: NativeChainCardProp
           onClick={() => navigate(`/wallet/swap/${currentSolanaNetwork.id}` as unknown as Path)}
         >
           {t('pages.Wallet.components.cosmos.NativeChainCard.index.swapButton')}
-        </Button>
+        </Button> */}
       </FourthLineContainer>
     </Container>
   );
@@ -190,6 +193,7 @@ export function NativeChainCardSkeleton({ chain, isCustom }: NativeChainCardProp
   const { currentAccount } = useCurrentAccount();
   const { currentPassword } = useCurrentPassword();
   const { extensionStorage } = useExtensionStorage();
+  // console.log(currentSolanaNetwork, 'currentSolanaNetwork');
 
   const { getExplorerAccountURL } = useBlockExplorerURLSWR(currentSolanaNetwork);
 
@@ -267,10 +271,10 @@ export function NativeChainCardSkeleton({ chain, isCustom }: NativeChainCardProp
         <Button Icon={SendIcon} typoVarient="h5" disabled>
           {t('pages.Wallet.components.ethereum.NativeChainCard.index.sendButton')}
         </Button>
-        <FourthLineCenterContainer />
-        <Button Icon={SwapIcon16} typoVarient="h5" disabled>
+        {/* <FourthLineCenterContainer /> */}
+        {/* <Button Icon={SwapIcon16} typoVarient="h5" disabled>
           {t('pages.Wallet.components.cosmos.NativeChainCard.index.swapButton')}
-        </Button>
+        </Button> */}
       </FourthLineContainer>
     </Container>
   );
@@ -369,10 +373,10 @@ export function NativeChainCardError({ chain, isCustom, resetErrorBoundary }: Na
         <Button Icon={SendIcon} typoVarient="h5" disabled>
           {t('pages.Wallet.components.ethereum.NativeChainCard.index.sendButton')}
         </Button>
-        <FourthLineCenterContainer />
+        {/* <FourthLineCenterContainer />
         <Button Icon={SwapIcon16} typoVarient="h5" disabled>
           {t('pages.Wallet.components.cosmos.NativeChainCard.index.swapButton')}
-        </Button>
+        </Button> */}
       </FourthLineContainer>
       {isLoading && <StyledAbsoluteLoading size="2.5rem" />}
     </Container>

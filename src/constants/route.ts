@@ -35,6 +35,10 @@ export const PATH = {
   CHAIN__ETHEREUM__NFT__ADD: '/chain/ethereum/nft/add',
   CHAIN__ETHEREUM__NETWORK__ADD: '/chain/ethereum/network/add',
 
+  // 修改
+  CHAIN_SOLANA_TOKEN_ADD_SPL:'/chain/solana/token/add/erc20',
+  CHAIN_SOLANA_TOKEN_ADD_SPL_SEARCH:'/chain/solana/token/add/erc20/search',
+
   CHAIN__APTOS__COIN__ADD: '/chain/aptos/coin/add',
 
   ACCOUNT__MANAGEMENT: '/account/management',

@@ -4,6 +4,9 @@ export const aptosAddressRegex = /^0x([a-fA-F0-9]{64}|[a-fA-F1-9]{1}[a-fA-F0-9]{
 
 export const suiAddressRegex = /^0x([a-fA-F0-9]{64}|[a-fA-F1-9]{1}[a-fA-F0-9]{62})$/;
 
+// 修改
+export const solanaAddressRegex = /^[1-9A-HJ-NP-Za-km-z]{44}$/;
+
 export const getCosmosAddressRegex = (prefix: string, lengths: number[]) =>
   new RegExp(`^${prefix}(${lengths.map((item) => `(.{${item},${item}})`).join('|')})$`);
 

@@ -40,6 +40,7 @@ export const extensionStorageDefault: ExtensionStorage = {
   selectedSolanaNetworkId:'',
   showSolanaNetworks: [],
   additionalSolanaNetworks: [],
+  solansTokens: [],
 
   allowedChainIds: [],
   allowedOrigins: [],

@@ -12,7 +12,7 @@ import type { SolanaChain } from '~/types/chain';
 
 import NativeChainCard, { NativeChainCardError, NativeChainCardSkeleton } from '../components/open/NativeChainCard';
 import NFTList from '../components/ethereum/NFTList';
-import TokenList from '../components/ethereum/TokenList';
+import TokenList from '../components/open/TokenList';
 import LedgerCheck from '../components/LedgerCheck';
 import { BottomContainer, Container, HeaderContainer, NativeChainCardContainer, StyledTabPanel } from '../styled';
 
@@ -63,11 +63,11 @@ export default function Solana({ chain }: SolanaProps) {
                             </Suspense>
                         </ErrorBoundary>
                     </NativeChainCardContainer>
-                    <Tabs value={tabValue} onChange={handleChange} variant="fullWidth">
+                    {/* <Tabs value={tabValue} onChange={handleChange} variant="fullWidth">
                         {tabLabels.map((item) => (
                             <Tab key={item} label={item} />
                         ))}
-                    </Tabs>
+                    </Tabs> */}
                     <StyledTabPanel value={tabValue} index={0}>
                         <BottomContainer sx={{ marginTop: '0.9rem' }}>
                             <TokenList />

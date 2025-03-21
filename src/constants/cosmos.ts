@@ -18,4 +18,5 @@ export const TOKEN_TYPE = {
 
 export const SOLANA_TOKEN_TYPE = {
   SPL:'SPL',
+  TOKEN2022:'TOKEN-2022'
 } as const;

@@ -107,7 +107,7 @@ export default function CoinListBottomSheet({ currentToken, onClickCoin, onClose
                 }}
               />
             );
-          })}
+          })}    
           {filteredTokenList?.length > viewLimit - 1 && (
             <IntersectionObserver
               onIntersect={() => {

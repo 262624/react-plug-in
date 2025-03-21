@@ -33,6 +33,9 @@ import ChainEthereumNetworkAdd from '~/Popup/pages/Chain/Ethereum/Network/Add';
 import ChainEthereumNFTAdd from '~/Popup/pages/Chain/Ethereum/NFT/Add';
 import ChainEthereumTokenAddERC20 from '~/Popup/pages/Chain/Ethereum/Token/Add/ERC20';
 import ChainEthereumTokenAddERC20Search from '~/Popup/pages/Chain/Ethereum/Token/Add/ERC20/Search';
+// 修改
+import ChainSolanaTokenAddERC20 from '~/Popup/pages/Chain/Solana/Token/Add/ERC20';
+import ChainSolanaTokenAddERC20Search from '~/Popup/pages/Chain/Solana/Token/Add/ERC20/Search';
 import ChainManagement from '~/Popup/pages/Chain/Management';
 import ChainManagementUse from '~/Popup/pages/Chain/Management/Use';
 import Dashboard from '~/Popup/pages/Dashboard';
@@ -151,6 +154,10 @@ export default function Routes() {
           <Route path={PATH.CHAIN__ETHEREUM__TOKEN__ADD__ERC20} element={<ChainEthereumTokenAddERC20 />} />
           <Route path={PATH.CHAIN__ETHEREUM__NFT__ADD} element={<ChainEthereumNFTAdd />} />
           <Route path={PATH.CHAIN__ETHEREUM__NETWORK__ADD} element={<ChainEthereumNetworkAdd />} />
+
+          {/* 修改 */}
+          <Route path={PATH.CHAIN_SOLANA_TOKEN_ADD_SPL} element={<ChainSolanaTokenAddERC20 />} />
+          <Route path={PATH.CHAIN_SOLANA_TOKEN_ADD_SPL_SEARCH} element={<ChainSolanaTokenAddERC20Search />} />
 
           <Route path={PATH.CHAIN__APTOS__COIN__ADD} element={<ChainAptosCoinAdd />} />
 
